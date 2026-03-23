@@ -1,0 +1,99 @@
+@model List<doan.Models.TriggerInfo>
+@{
+    ViewData["Title"] = "Triggers";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="mb-1"><i class="bi bi-lightning-charge-fill text-warning me-2"></i>Database Triggers</h2>
+        <p class="text-muted mb-0">Danh sách triggers tự động kích hoạt trong Oracle Database</p>
+    </div>
+    <div>
+        <span class="badge bg-success me-1">@Model.Count(t => t.Status == "ENABLED") Enabled</span>
+        <span class="badge bg-secondary">@Model.Count(t => t.Status == "DISABLED") Disabled</span>
+    </div>
+</div>
+
+<!-- Summary Cards -->
+<div class="row g-3 mb-4">
+    @foreach (var ev in new[] { "INSERT", "UPDATE", "DELETE" })
+    {
+        var count = Model.Count(t => t.TriggeringEvent.Contains(ev));
+        var color = ev == "INSERT" ? "success" : ev == "UPDATE" ? "warning" : "danger";
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <div class="fs-1">@(ev == "INSERT" ? "➕" : ev == "UPDATE" ? "✏️" : "🗑️")</div>
+                    <div class="fw-bold fs-3 text-@color">@count</div>
+                    <div class="text-muted">@ev Triggers</div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<!-- Triggers Table -->
+<div class="card">
+    <div class="card-header bg-white border-0 pt-3">
+        <h5 class="mb-0">Chi Tiết Triggers</h5>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Trigger Name</th>
+                        <th>Table</th>
+                        <th>Event</th>
+                        <th>Type</th>
+                        <th>Status</th>
+                        <th>Mô Tả</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Count; i++)
+                    {
+                        var t = Model[i];
+                        <tr>
+                            <td>@(i + 1)</td>
+                            <td class="font-monospace text-warning fw-bold">@t.TriggerName</td>
+                            <td><span class="badge bg-secondary">@t.TableName</span></td>
+                            <td>
+                                @if (t.TriggeringEvent.Contains("INSERT"))
+                                { <span class="badge bg-success me-1">INSERT</span> }
+                                @if (t.TriggeringEvent.Contains("UPDATE"))
+                                { <span class="badge bg-warning text-dark me-1">UPDATE</span> }
+                                @if (t.TriggeringEvent.Contains("DELETE"))
+                                { <span class="badge bg-danger me-1">DELETE</span> }
+                            </td>
+                            <td><small class="text-muted">@t.TriggerType</small></td>
+                            <td>
+                                @if (t.Status == "ENABLED")
+                                { <span class="badge bg-success"><i class="bi bi-check-circle me-1"></i>ENABLED</span> }
+                                else
+                                { <span class="badge bg-secondary"><i class="bi bi-x-circle me-1"></i>DISABLED</span> }
+                            </td>
+                            <td class="small text-muted">@t.Description</td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-warning" type="button" 
+                                        data-bs-toggle="collapse" data-bs-target="#body-@i">
+                                    <i class="bi bi-code-slash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr class="collapse" id="body-@i">
+                            <td colspan="8" class="p-0">
+                                <div class="bg-dark text-light p-3">
+                                    <h6 class="text-warning mb-2"><i class="bi bi-code-slash me-2"></i>Trigger Body</h6>
+                                    <pre class="mb-0 text-light" style="white-space:pre-wrap; font-size:0.85rem;">@t.TriggerBody</pre>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

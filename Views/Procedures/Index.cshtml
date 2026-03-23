@@ -1,0 +1,75 @@
+@model List<doan.Models.ProcedureInfo>
+@{
+    ViewData["Title"] = "Procedures";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="mb-1"><i class="bi bi-gear-fill text-primary me-2"></i>Stored Procedures</h2>
+        <p class="text-muted mb-0">Danh sách các stored procedures trong Oracle Database</p>
+    </div>
+    <span class="badge bg-primary fs-6">@Model.Count procedures</span>
+</div>
+
+<div class="row g-3">
+    @foreach (var proc in Model)
+    {
+        <div class="col-md-6">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-start mb-2">
+                        <span class="fs-2 me-3">@proc.Icon</span>
+                        <div class="flex-grow-1">
+                            <h5 class="card-title mb-1 font-monospace text-primary">@proc.ProcedureName</h5>
+                            <span class="badge bg-secondary me-1">@proc.Category</span>
+                            <span class="badge bg-success">VALID</span>
+                        </div>
+                    </div>
+                    <p class="card-text text-muted">@proc.Description</p>
+                    
+                    <h6 class="text-muted small text-uppercase mb-2">Tham Số</h6>
+                    <div class="table-responsive">
+                        <table class="table table-sm table-bordered mb-3">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Tên</th>
+                                    <th>Kiểu DL</th>
+                                    <th>Hướng</th>
+                                    <th>Mô Tả</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var p in proc.Parameters)
+                                {
+                                    <tr>
+                                        <td class="font-monospace text-primary small">@p.Name</td>
+                                        <td><span class="badge bg-light text-dark">@p.DataType</span></td>
+                                        <td>
+                                            @if (p.Direction == "IN")
+                                            {
+                                                <span class="badge bg-info">IN</span>
+                                            }
+                                            else if (p.Direction == "OUT")
+                                            {
+                                                <span class="badge bg-warning text-dark">OUT</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge bg-secondary">IN/OUT</span>
+                                            }
+                                        </td>
+                                        <td class="small text-muted">@p.Description</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <a asp-action="Execute" asp-route-name="@proc.ProcedureName" class="btn btn-primary btn-sm">
+                        <i class="bi bi-play-fill me-1"></i>Thực Thi
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
