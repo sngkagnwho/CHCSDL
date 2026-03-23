@@ -1,0 +1,28 @@
+@model doan.Models.NhanVien
+@{
+    ViewData["Title"] = "Xóa Nhân Viên";
+}
+
+<h2 class="text-danger">🗑️ Xóa Nhân Viên</h2>
+<hr />
+
+<div class="alert alert-warning">
+    Bạn có chắc muốn xóa nhân viên <strong>@Model.TenNhanVien</strong>?
+</div>
+
+<dl class="row">
+    <dt class="col-sm-3">Họ Tên:</dt>
+    <dd class="col-sm-9">@Model.TenNhanVien</dd>
+    <dt class="col-sm-3">Chức Vụ:</dt>
+    <dd class="col-sm-9">@Model.ChucVu</dd>
+    <dt class="col-sm-3">Trạng Thái:</dt>
+    <dd class="col-sm-9">@Model.TrangThai</dd>
+</dl>
+
+<form asp-action="Delete">
+    <input type="hidden" asp-for="MaNhanVien" />
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-danger">🗑️ Xác nhận xóa</button>
+        <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+    </div>
+</form>

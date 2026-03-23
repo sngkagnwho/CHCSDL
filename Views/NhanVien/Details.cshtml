@@ -1,0 +1,31 @@
+@model doan.Models.NhanVien
+@{
+    ViewData["Title"] = "Chi Tiết Nhân Viên";
+}
+
+<h2>👷 Chi Tiết Nhân Viên</h2>
+<hr />
+
+<dl class="row">
+    <dt class="col-sm-3">Mã NV:</dt>
+    <dd class="col-sm-9">@Model.MaNhanVien</dd>
+    <dt class="col-sm-3">Họ Tên:</dt>
+    <dd class="col-sm-9">@Model.TenNhanVien</dd>
+    <dt class="col-sm-3">Chức Vụ:</dt>
+    <dd class="col-sm-9">@Model.ChucVu</dd>
+    <dt class="col-sm-3">Số ĐT:</dt>
+    <dd class="col-sm-9">@Model.Sdt</dd>
+    <dt class="col-sm-3">Email:</dt>
+    <dd class="col-sm-9">@Model.Email</dd>
+    <dt class="col-sm-3">Lương:</dt>
+    <dd class="col-sm-9">@Model.Luong.ToString("N0") VND</dd>
+    <dt class="col-sm-3">Ngày Vào Làm:</dt>
+    <dd class="col-sm-9">@Model.NgayVaoLam?.ToString("dd/MM/yyyy")</dd>
+    <dt class="col-sm-3">Trạng Thái:</dt>
+    <dd class="col-sm-9"><span class="badge @(Model.TrangThai == "ACTIVE" ? "bg-success" : "bg-secondary")">@Model.TrangThai</span></dd>
+</dl>
+
+<div class="d-flex gap-2 mt-3">
+    <a asp-action="Edit" asp-route-id="@Model.MaNhanVien" class="btn btn-warning">✏️ Sửa</a>
+    <a asp-action="Index" class="btn btn-secondary">← Quay lại</a>
+</div>

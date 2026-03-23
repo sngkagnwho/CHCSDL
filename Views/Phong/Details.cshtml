@@ -1,0 +1,27 @@
+@model doan.Models.Phong
+@{
+    ViewData["Title"] = "Chi Tiết Phòng";
+}
+
+<h2>🛏️ Chi Tiết Phòng</h2>
+<hr />
+
+<dl class="row">
+    <dt class="col-sm-3">Số Phòng:</dt>
+    <dd class="col-sm-9"><strong>@Model.SoPhong</strong></dd>
+    <dt class="col-sm-3">Loại Phòng:</dt>
+    <dd class="col-sm-9">@Model.LoaiPhong?.TenLoaiPhong</dd>
+    <dt class="col-sm-3">Tầng:</dt>
+    <dd class="col-sm-9">@Model.Tang</dd>
+    <dt class="col-sm-3">Giá/Ngày:</dt>
+    <dd class="col-sm-9">@Model.GiaNgay?.ToString("N0") VND</dd>
+    <dt class="col-sm-3">Trạng Thái:</dt>
+    <dd class="col-sm-9"><span class="badge bg-info">@Model.TrangThai</span></dd>
+    <dt class="col-sm-3">Mô Tả:</dt>
+    <dd class="col-sm-9">@Model.MoTa</dd>
+</dl>
+
+<div class="d-flex gap-2 mt-3">
+    <a asp-action="Edit" asp-route-id="@Model.MaPhong" class="btn btn-warning">✏️ Sửa</a>
+    <a asp-action="Index" class="btn btn-secondary">← Quay lại</a>
+</div>

@@ -1,0 +1,64 @@
+@model doan.Models.NhanVien
+@{
+    ViewData["Title"] = "Sửa Nhân Viên";
+}
+
+<h2>✏️ Sửa Nhân Viên</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="MaNhanVien" />
+
+            <div class="mb-3">
+                <label asp-for="TenNhanVien" class="form-label"></label>
+                <input asp-for="TenNhanVien" class="form-control" />
+                <span asp-validation-for="TenNhanVien" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="ChucVu" class="form-label"></label>
+                <input asp-for="ChucVu" class="form-control" />
+                <span asp-validation-for="ChucVu" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Sdt" class="form-label"></label>
+                <input asp-for="Sdt" class="form-control" />
+                <span asp-validation-for="Sdt" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Luong" class="form-label"></label>
+                <input asp-for="Luong" class="form-control" type="number" step="100000" />
+                <span asp-validation-for="Luong" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="NgayVaoLam" class="form-label"></label>
+                <input asp-for="NgayVaoLam" class="form-control" type="date" />
+                <span asp-validation-for="NgayVaoLam" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="TrangThai" class="form-label"></label>
+                <select asp-for="TrangThai" class="form-select">
+                    <option value="ACTIVE">ACTIVE</option>
+                    <option value="INACTIVE">INACTIVE</option>
+                </select>
+                <span asp-validation-for="TrangThai" class="text-danger"></span>
+            </div>
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-warning">💾 Cập Nhật</button>
+                <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

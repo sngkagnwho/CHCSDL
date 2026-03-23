@@ -1,0 +1,30 @@
+@model doan.Models.DatPhong
+@{
+    ViewData["Title"] = "Xóa Đặt Phòng";
+}
+
+<h2 class="text-danger">🗑️ Xóa Đặt Phòng</h2>
+<hr />
+
+<div class="alert alert-warning">
+    Bạn có chắc muốn xóa đặt phòng <strong>#@Model.MaDatPhong</strong> của <strong>@Model.KhachHang?.TenKhachHang</strong>?
+</div>
+
+<dl class="row">
+    <dt class="col-sm-3">Khách Hàng:</dt>
+    <dd class="col-sm-9">@Model.KhachHang?.TenKhachHang</dd>
+    <dt class="col-sm-3">Check-in:</dt>
+    <dd class="col-sm-9">@Model.NgayCheckIn.ToString("dd/MM/yyyy")</dd>
+    <dt class="col-sm-3">Check-out:</dt>
+    <dd class="col-sm-9">@Model.NgayCheckOut.ToString("dd/MM/yyyy")</dd>
+    <dt class="col-sm-3">Trạng Thái:</dt>
+    <dd class="col-sm-9">@Model.TrangThai</dd>
+</dl>
+
+<form asp-action="Delete">
+    <input type="hidden" asp-for="MaDatPhong" />
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-danger">🗑️ Xác nhận xóa</button>
+        <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+    </div>
+</form>

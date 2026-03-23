@@ -1,0 +1,61 @@
+@model doan.Models.KhachHang
+@{
+    ViewData["Title"] = "Sửa Khách Hàng";
+}
+
+<h2>✏️ Sửa Khách Hàng</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="MaKhachHang" />
+
+            <div class="mb-3">
+                <label asp-for="TenKhachHang" class="form-label"></label>
+                <input asp-for="TenKhachHang" class="form-control" />
+                <span asp-validation-for="TenKhachHang" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Cmnd" class="form-label"></label>
+                <input asp-for="Cmnd" class="form-control" />
+                <span asp-validation-for="Cmnd" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="NgaySinh" class="form-label"></label>
+                <input asp-for="NgaySinh" class="form-control" type="date" />
+                <span asp-validation-for="NgaySinh" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Sdt" class="form-label"></label>
+                <input asp-for="Sdt" class="form-control" />
+                <span asp-validation-for="Sdt" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="DiaChi" class="form-label"></label>
+                <textarea asp-for="DiaChi" class="form-control" rows="2"></textarea>
+                <span asp-validation-for="DiaChi" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="QuocTich" class="form-label"></label>
+                <input asp-for="QuocTich" class="form-control" />
+                <span asp-validation-for="QuocTich" class="text-danger"></span>
+            </div>
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-warning">💾 Cập Nhật</button>
+                <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
