@@ -1,0 +1,62 @@
+@model IEnumerable<doan.Models.LoaiPhong>
+
+@{
+    ViewData["Title"] = "Loại Phòng";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2><i class="bi bi-list-stars me-2"></i>Danh Sách Loại Phòng</h2>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover table-striped mb-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Mã</th>
+                        <th>Tên Loại Phòng</th>
+                        <th>Mô Tả</th>
+                        <th>Giá Cơ Bản</th>
+                        <th>Sức Chứa</th>
+                        <th>Số Phòng</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.MaLoaiPhong</td>
+                            <td><strong>@(item.TenLoaiPhong ?? "-")</strong></td>
+                            <td>@(item.MoTa ?? "-")</td>
+                            <td>
+                                @if (item.GiaCoban.HasValue)
+                                {
+                                    <span class="text-success fw-semibold">@item.GiaCoban.Value.ToString("N0") VNĐ</span>
+                                }
+                                else
+                                {
+                                    <span class="text-muted">-</span>
+                                }
+                            </td>
+                            <td>@(item.SuChua?.ToString() ?? "-")</td>
+                            <td>@item.Phongs.Count</td>
+                        </tr>
+                    }
+                    @if (!Model.Any())
+                    {
+                        <tr>
+                            <td colspan="6" class="text-center text-muted py-4">
+                                <i class="bi bi-inbox fs-4 d-block mb-1"></i>
+                                Không có dữ liệu loại phòng.
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="card-footer text-muted">
+        Tổng số: <strong>@Model.Count()</strong> loại phòng
+    </div>
+</div>
