@@ -1,0 +1,68 @@
+@model List<doan.Models.FunctionInfo>
+@{
+    ViewData["Title"] = "Functions";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="mb-1"><i class="bi bi-code-slash text-success me-2"></i>User-Defined Functions</h2>
+        <p class="text-muted mb-0">Danh sách functions được định nghĩa trong Oracle Database</p>
+    </div>
+    <span class="badge bg-success fs-6">@Model.Count functions</span>
+</div>
+
+<div class="row g-3">
+    @foreach (var fn in Model)
+    {
+        <div class="col-md-6">
+            <div class="card h-100">
+                <div class="card-header bg-white border-0 pt-3 pb-0">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="card-title mb-1 font-monospace text-success">🔧 @fn.FunctionName</h5>
+                            <span class="badge bg-light text-dark me-1">RETURNS @fn.ReturnType</span>
+                            @if (!string.IsNullOrEmpty(fn.Category))
+                            { <span class="badge bg-secondary">@fn.Category</span> }
+                        </div>
+                        <span class="badge bg-success">VALID</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="card-text text-muted">@fn.Description</p>
+                    
+                    @if (fn.Parameters.Any())
+                    {
+                        <h6 class="text-muted small text-uppercase mb-2">Tham Số</h6>
+                        <table class="table table-sm table-bordered mb-3">
+                            <thead class="table-light">
+                                <tr><th>Tên</th><th>Kiểu DL</th><th>Mô Tả</th></tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var p in fn.Parameters)
+                                {
+                                    <tr>
+                                        <td class="font-monospace text-success small">@p.Name</td>
+                                        <td><span class="badge bg-light text-dark">@p.DataType</span></td>
+                                        <td class="small text-muted">@p.Description</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+
+                    @if (!string.IsNullOrEmpty(fn.ExampleCall))
+                    {
+                        <div class="bg-dark rounded p-2 mb-3">
+                            <small class="text-muted">SQL Example:</small>
+                            <pre class="text-success mb-0 mt-1" style="font-size:0.8rem;">@fn.ExampleCall</pre>
+                        </div>
+                    }
+                    
+                    <a asp-action="Test" asp-route-name="@fn.FunctionName" class="btn btn-success btn-sm">
+                        <i class="bi bi-play-fill me-1"></i>Test Function
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

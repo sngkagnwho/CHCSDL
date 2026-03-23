@@ -1,0 +1,274 @@
+@model doan.Models.DashboardViewModel
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="mb-1"><i class="bi bi-speedometer2 text-primary me-2"></i>Dashboard Tổng Quan</h2>
+        <p class="text-muted mb-0">Quản lý Oracle Database - Khách Sạn</p>
+    </div>
+    <div class="text-muted small">
+        <i class="bi bi-clock me-1"></i>@DateTime.Now.ToString("dd/MM/yyyy HH:mm")
+    </div>
+</div>
+
+<!-- KPI Cards -->
+<div class="row g-3 mb-4">
+    <div class="col-xl-3 col-md-6">
+        <div class="card stat-card h-100">
+            <div class="card-body d-flex align-items-center">
+                <div class="rounded-circle bg-primary bg-opacity-10 p-3 me-3">
+                    <i class="bi bi-cash-stack text-primary fs-4"></i>
+                </div>
+                <div>
+                    <div class="text-muted small">Doanh Thu Hôm Nay</div>
+                    <div class="fw-bold fs-5 text-primary">@Model.DoanhThuNgay.ToString("N0") ₫</div>
+                    <div class="text-muted small">@Model.SoHoaDonNgay hóa đơn</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="card stat-card h-100">
+            <div class="card-body d-flex align-items-center">
+                <div class="rounded-circle bg-success bg-opacity-10 p-3 me-3">
+                    <i class="bi bi-calendar-month text-success fs-4"></i>
+                </div>
+                <div>
+                    <div class="text-muted small">Doanh Thu Tháng @DateTime.Now.Month</div>
+                    <div class="fw-bold fs-5 text-success">@Model.DoanhThuThang.ToString("N0") ₫</div>
+                    <div class="text-muted small">@Model.SoHoaDonThang hóa đơn</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="card stat-card h-100">
+            <div class="card-body d-flex align-items-center">
+                <div class="rounded-circle bg-warning bg-opacity-10 p-3 me-3">
+                    <i class="bi bi-door-open text-warning fs-4"></i>
+                </div>
+                <div>
+                    <div class="text-muted small">Phòng Trống / Tổng</div>
+                    <div class="fw-bold fs-5 text-warning">@Model.SoPhongTrong / @Model.TongSoPhong</div>
+                    <div class="text-muted small">@Model.SoPhongDangDung phòng đang dùng</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="card stat-card h-100">
+            <div class="card-body d-flex align-items-center">
+                <div class="rounded-circle bg-info bg-opacity-10 p-3 me-3">
+                    <i class="bi bi-people text-info fs-4"></i>
+                </div>
+                <div>
+                    <div class="text-muted small">Tổng Khách Hàng</div>
+                    <div class="fw-bold fs-5 text-info">@Model.TongKhachHang</div>
+                    <div class="text-muted small">@Model.SoKhachNgay khách hôm nay</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Charts Row -->
+<div class="row g-3 mb-4">
+    <div class="col-lg-8">
+        <div class="card h-100">
+            <div class="card-header bg-white border-0 pt-3 pb-0">
+                <h5 class="mb-0"><i class="bi bi-bar-chart-line text-primary me-2"></i>Doanh Thu 7 Ngày Gần Đây</h5>
+                <small class="text-muted">Từ sp_tinh_doanh_thu_ngay</small>
+            </div>
+            <div class="card-body">
+                <canvas id="revenueChart" height="100"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card h-100">
+            <div class="card-header bg-white border-0 pt-3 pb-0">
+                <h5 class="mb-0"><i class="bi bi-pie-chart text-warning me-2"></i>Tình Trạng Phòng</h5>
+                <small class="text-muted">Từ sp_thong_ke_phong_trong</small>
+            </div>
+            <div class="card-body">
+                <canvas id="roomChart" height="150"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- DB Objects Summary -->
+<div class="row g-3 mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header bg-white border-0 pt-3 pb-0">
+                <h5 class="mb-0"><i class="bi bi-database text-secondary me-2"></i>Oracle Database Objects</h5>
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-3 col-6">
+                        <a asp-controller="Procedures" asp-action="Index" class="text-decoration-none">
+                            <div class="border rounded-3 p-3 text-center h-100">
+                                <div class="fs-1">⚙️</div>
+                                <div class="fw-bold fs-4 text-primary">@Model.TongProcedures</div>
+                                <div class="text-muted">Procedures</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <a asp-controller="Triggers" asp-action="Index" class="text-decoration-none">
+                            <div class="border rounded-3 p-3 text-center h-100">
+                                <div class="fs-1">⚡</div>
+                                <div class="fw-bold fs-4 text-warning">@Model.TongTriggers</div>
+                                <div class="text-muted">Triggers</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <a asp-controller="Functions" asp-action="Index" class="text-decoration-none">
+                            <div class="border rounded-3 p-3 text-center h-100">
+                                <div class="fs-1">🔧</div>
+                                <div class="fw-bold fs-4 text-success">@Model.TongFunctions</div>
+                                <div class="text-muted">Functions</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <a asp-controller="Packages" asp-action="Index" class="text-decoration-none">
+                            <div class="border rounded-3 p-3 text-center h-100">
+                                <div class="fs-1">📦</div>
+                                <div class="fw-bold fs-4 text-info">@Model.TongPackages</div>
+                                <div class="text-muted">Packages</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Room Status Table -->
+<div class="row g-3">
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header bg-white border-0 pt-3 pb-0">
+                <h5 class="mb-0"><i class="bi bi-building text-secondary me-2"></i>Thống Kê Phòng Theo Loại</h5>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Loại Phòng</th>
+                                <th class="text-center">Trống</th>
+                                <th class="text-center">Đang Dùng</th>
+                                <th>Tỷ Lệ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var room in Model.ThongKePhong)
+                            {
+                                var total = room.SoPhongTrong + room.SoPhongDangDung;
+                                var pct = total > 0 ? (room.SoPhongDangDung * 100 / total) : 0;
+                                <tr>
+                                    <td>@room.LoaiPhong</td>
+                                    <td class="text-center"><span class="badge bg-success">@room.SoPhongTrong</span></td>
+                                    <td class="text-center"><span class="badge bg-danger">@room.SoPhongDangDung</span></td>
+                                    <td>
+                                        <div class="progress" style="height:8px;">
+                                            <div class="progress-bar bg-danger" style="width:@pct%"></div>
+                                        </div>
+                                        <small class="text-muted">@pct% đang dùng</small>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header bg-white border-0 pt-3 pb-0">
+                <h5 class="mb-0"><i class="bi bi-bar-chart text-secondary me-2"></i>Doanh Thu Theo Ngày</h5>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Ngày</th>
+                                <th class="text-end">Doanh Thu</th>
+                                <th class="text-center">Hóa Đơn</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var day in Model.DoanhThuNgayTrongThang)
+                            {
+                                <tr>
+                                    <td>@day.Ngay</td>
+                                    <td class="text-end text-primary fw-bold">@day.DoanhThu.ToString("N0") ₫</td>
+                                    <td class="text-center">@day.SoHoaDon</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    const revenueLabels = [@Html.Raw(string.Join(",", Model.DoanhThuNgayTrongThang.Select(d => $"'{d.Ngay}'")))];
+    const revenueData = [@Html.Raw(string.Join(",", Model.DoanhThuNgayTrongThang.Select(d => d.DoanhThu)))];
+
+    new Chart(document.getElementById('revenueChart'), {
+        type: 'bar',
+        data: {
+            labels: revenueLabels,
+            datasets: [{
+                label: 'Doanh Thu (₫)',
+                data: revenueData,
+                backgroundColor: 'rgba(13,110,253,0.7)',
+                borderColor: 'rgba(13,110,253,1)',
+                borderWidth: 1,
+                borderRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: { callback: v => (v/1000000).toFixed(1) + 'M' }
+                }
+            }
+        }
+    });
+
+    new Chart(document.getElementById('roomChart'), {
+        type: 'doughnut',
+        data: {
+            labels: ['Phòng Trống', 'Đang Dùng'],
+            datasets: [{
+                data: [@Model.SoPhongTrong, @Model.SoPhongDangDung],
+                backgroundColor: ['#198754', '#dc3545'],
+                hoverOffset: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { position: 'bottom' }
+            }
+        }
+    });
+</script>
+}

@@ -1,0 +1,98 @@
+@model doan.Models.FunctionInfo
+@{
+    ViewData["Title"] = "Test - " + Model.FunctionName;
+    var result = ViewBag.Result;
+}
+
+<div class="mb-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-action="Index">Functions</a></li>
+            <li class="breadcrumb-item active">@Model.FunctionName</li>
+        </ol>
+    </nav>
+    <h2><i class="bi bi-play-circle-fill text-success me-2"></i>Test Function</h2>
+</div>
+
+<div class="row g-3">
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0 font-monospace text-success">🔧 @Model.FunctionName</h5>
+                <small class="text-muted">Returns: <span class="badge bg-light text-dark">@Model.ReturnType</span></small>
+            </div>
+            <div class="card-body">
+                <p class="text-muted">@Model.Description</p>
+                
+                <form method="post" asp-action="Test" asp-route-name="@Model.FunctionName">
+                    @if (Model.Parameters.Any())
+                    {
+                        <h6 class="text-muted text-uppercase small mb-3">Input Parameters</h6>
+                        @foreach (var p in Model.Parameters)
+                        {
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">
+                                    @p.Name <span class="badge bg-info">@p.DataType</span>
+                                </label>
+                                <input type="text" name="paramValues[@p.Name]" class="form-control font-monospace"
+                                       placeholder="@p.Description" />
+                                <small class="text-muted">@p.Description</small>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="alert alert-info">
+                            <i class="bi bi-info-circle me-2"></i>Function này không có tham số đầu vào.
+                        </div>
+                    }
+                    
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-success">
+                            <i class="bi bi-play-fill me-1"></i>Chạy Function
+                        </button>
+                        <a asp-action="Index" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left me-1"></i>Quay Lại
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-6">
+        @if (result != null)
+        {
+            <div class="card border-success">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="bi bi-check-circle-fill me-2"></i>Kết Quả</h5>
+                </div>
+                <div class="card-body text-center">
+                    <div class="display-6 fw-bold text-success mb-3">@result</div>
+                    <p class="text-muted">Return value của function</p>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="card bg-light">
+                <div class="card-body text-center py-5">
+                    <i class="bi bi-code-slash text-muted" style="font-size:4rem;"></i>
+                    <p class="text-muted mt-3">Nhấn <strong>Chạy Function</strong> để xem kết quả</p>
+                </div>
+            </div>
+        }
+        
+        @if (!string.IsNullOrEmpty(Model.ExampleCall))
+        {
+            <div class="card mt-3">
+                <div class="card-header bg-dark text-white">
+                    <small><i class="bi bi-code me-1"></i>SQL Example</small>
+                </div>
+                <div class="card-body bg-dark rounded-bottom">
+                    <pre class="text-success mb-0" style="font-size:0.85rem;">@Model.ExampleCall</pre>
+                </div>
+            </div>
+        }
+    </div>
+</div>

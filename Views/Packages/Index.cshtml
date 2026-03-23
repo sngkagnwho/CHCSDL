@@ -1,0 +1,99 @@
+@model List<doan.Models.PackageInfo>
+@{
+    ViewData["Title"] = "Packages";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="mb-1"><i class="bi bi-box-seam text-info me-2"></i>Oracle Packages</h2>
+        <p class="text-muted mb-0">Danh sách packages trong Oracle Database</p>
+    </div>
+    <span class="badge bg-info fs-6">@Model.Count packages</span>
+</div>
+
+@foreach (var pkg in Model)
+{
+    <div class="card mb-4">
+        <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+            <div>
+                <h4 class="mb-0 font-monospace">
+                    <i class="bi bi-box-seam me-2"></i>@pkg.PackageName
+                </h4>
+                <small class="text-muted">@pkg.Description</small>
+            </div>
+            <div>
+                <span class="badge @(pkg.Status == "VALID" ? "bg-success" : "bg-danger") me-2">@pkg.Status</span>
+                <small class="text-muted">Last modified: @pkg.LastModified.ToString("dd/MM/yyyy")</small>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="text-primary mb-0">
+                            <i class="bi bi-gear-fill me-2"></i>Procedures 
+                            <span class="badge bg-primary">@pkg.Procedures.Count</span>
+                        </h5>
+                    </div>
+                    <div class="list-group">
+                        @foreach (var proc in pkg.Procedures)
+                        {
+                            <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                                <div>
+                                    <span class="me-2">@proc.Icon</span>
+                                    <span class="font-monospace fw-bold text-primary">@proc.ProcedureName</span>
+                                    <br>
+                                    <small class="text-muted ms-4">@proc.Description</small>
+                                </div>
+                                <a asp-controller="Procedures" asp-action="Execute" asp-route-name="@proc.ProcedureName" 
+                                   class="btn btn-primary btn-sm">
+                                    <i class="bi bi-play-fill"></i>
+                                </a>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="text-success mb-0">
+                            <i class="bi bi-code-slash me-2"></i>Functions 
+                            <span class="badge bg-success">@pkg.Functions.Count</span>
+                        </h5>
+                    </div>
+                    @if (pkg.Functions.Any())
+                    {
+                        <div class="list-group">
+                            @foreach (var fn in pkg.Functions)
+                            {
+                                <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <span class="font-monospace fw-bold text-success">🔧 @fn.FunctionName</span>
+                                        <br>
+                                        <small class="text-muted">
+                                            @fn.Description
+                                            <span class="badge bg-light text-dark ms-1">→ @fn.ReturnType</span>
+                                        </small>
+                                    </div>
+                                    <a asp-controller="Functions" asp-action="Test" asp-route-name="@fn.FunctionName"
+                                       class="btn btn-success btn-sm">
+                                        <i class="bi bi-play-fill"></i>
+                                    </a>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-muted text-center py-3">
+                            <i class="bi bi-inbox fs-3 d-block mb-2"></i>Không có functions
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="card-footer text-muted small">
+            <i class="bi bi-info-circle me-1"></i>
+            Tổng: @pkg.Procedures.Count procedures, @pkg.Functions.Count functions trong package này
+        </div>
+    </div>
+}
