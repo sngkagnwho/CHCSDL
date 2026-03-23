@@ -1,0 +1,28 @@
+@model doan.Models.Phong
+@{
+    ViewData["Title"] = "Xóa Phòng";
+}
+
+<h2 class="text-danger">🗑️ Xóa Phòng</h2>
+<hr />
+
+<div class="alert alert-warning">
+    Bạn có chắc muốn xóa phòng <strong>@Model.SoPhong</strong>?
+</div>
+
+<dl class="row">
+    <dt class="col-sm-3">Số Phòng:</dt>
+    <dd class="col-sm-9">@Model.SoPhong</dd>
+    <dt class="col-sm-3">Loại Phòng:</dt>
+    <dd class="col-sm-9">@Model.LoaiPhong?.TenLoaiPhong</dd>
+    <dt class="col-sm-3">Trạng Thái:</dt>
+    <dd class="col-sm-9">@Model.TrangThai</dd>
+</dl>
+
+<form asp-action="Delete">
+    <input type="hidden" asp-for="MaPhong" />
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-danger">🗑️ Xác nhận xóa</button>
+        <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+    </div>
+</form>

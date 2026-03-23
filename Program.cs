@@ -1,3 +1,6 @@
+using doan.Data;
+using Microsoft.EntityFrameworkCore;
+
 namespace doan
 {
     public class Program
@@ -8,6 +11,11 @@ namespace doan
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            // Oracle Database connection
+            var connectionString = builder.Configuration.GetConnectionString("OracleConnection");
+            builder.Services.AddDbContext<HotelDbContext>(options =>
+                options.UseOracle(connectionString));
 
             var app = builder.Build();
 

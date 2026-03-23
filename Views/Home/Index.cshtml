@@ -1,8 +1,73 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Trang Chủ";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="py-4">
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold text-primary">🏨 Hệ Thống Quản Lý Khách Sạn</h1>
+        <p class="lead text-muted">Quản lý phòng, khách hàng, đặt phòng và hóa đơn</p>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center p-4">
+                    <div class="display-4 mb-3">👤</div>
+                    <h5 class="card-title fw-bold">Khách Hàng</h5>
+                    <p class="card-text text-muted">Quản lý thông tin khách hàng, CMND/CCCD, liên hệ</p>
+                    <a asp-controller="KhachHang" asp-action="Index" class="btn btn-primary">Xem danh sách</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center p-4">
+                    <div class="display-4 mb-3">🛏️</div>
+                    <h5 class="card-title fw-bold">Phòng</h5>
+                    <p class="card-text text-muted">Quản lý danh sách phòng, loại phòng, trạng thái</p>
+                    <a asp-controller="Phong" asp-action="Index" class="btn btn-primary">Xem danh sách</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center p-4">
+                    <div class="display-4 mb-3">📋</div>
+                    <h5 class="card-title fw-bold">Đặt Phòng</h5>
+                    <p class="card-text text-muted">Quản lý đặt phòng, check-in, check-out</p>
+                    <a asp-controller="DatPhong" asp-action="Index" class="btn btn-primary">Xem danh sách</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center p-4">
+                    <div class="display-4 mb-3">🧾</div>
+                    <h5 class="card-title fw-bold">Hóa Đơn</h5>
+                    <p class="card-text text-muted">Quản lý hóa đơn, thanh toán, doanh thu</p>
+                    <a asp-controller="HoaDon" asp-action="Index" class="btn btn-primary">Xem danh sách</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center p-4">
+                    <div class="display-4 mb-3">👷</div>
+                    <h5 class="card-title fw-bold">Nhân Viên</h5>
+                    <p class="card-text text-muted">Quản lý nhân viên, chức vụ, lương</p>
+                    <a asp-controller="NhanVien" asp-action="Index" class="btn btn-primary">Xem danh sách</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm bg-light">
+                <div class="card-body text-center p-4">
+                    <div class="display-4 mb-3">📊</div>
+                    <h5 class="card-title fw-bold">Báo Cáo</h5>
+                    <p class="card-text text-muted">Thống kê doanh thu, phòng trống, báo cáo tháng</p>
+                    <span class="btn btn-secondary disabled">Sắp có</span>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

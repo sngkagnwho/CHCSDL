@@ -1,0 +1,66 @@
+@model doan.Models.HoaDon
+@{
+    ViewData["Title"] = "Tạo Hóa Đơn";
+}
+
+<h2>🧾 Tạo Hóa Đơn</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="mb-3">
+                <label asp-for="MaDatPhong" class="form-label"></label>
+                <select asp-for="MaDatPhong" asp-items="@ViewBag.DatPhongList" class="form-select">
+                    <option value="">-- Chọn đặt phòng --</option>
+                </select>
+                <span asp-validation-for="MaDatPhong" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="NgayLap" class="form-label"></label>
+                <input asp-for="NgayLap" class="form-control" type="date" />
+                <span asp-validation-for="NgayLap" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="TongTien" class="form-label"></label>
+                <input asp-for="TongTien" class="form-control" type="number" step="1000" />
+                <span asp-validation-for="TongTien" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="GiamGia" class="form-label"></label>
+                <input asp-for="GiamGia" class="form-control" type="number" step="1" min="0" max="100" />
+                <span asp-validation-for="GiamGia" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="ThueVat" class="form-label"></label>
+                <input asp-for="ThueVat" class="form-control" type="number" step="1" min="0" max="100" />
+                <span asp-validation-for="ThueVat" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="TrangThai" class="form-label"></label>
+                <select asp-for="TrangThai" class="form-select">
+                    <option value="UNPAID">UNPAID</option>
+                    <option value="PARTIAL">PARTIAL</option>
+                    <option value="PAID">PAID</option>
+                </select>
+                <span asp-validation-for="TrangThai" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="GhiChu" class="form-label"></label>
+                <textarea asp-for="GhiChu" class="form-control" rows="2"></textarea>
+                <span asp-validation-for="GhiChu" class="text-danger"></span>
+            </div>
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-success">💾 Lưu</button>
+                <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

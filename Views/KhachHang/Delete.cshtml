@@ -1,0 +1,28 @@
+@model doan.Models.KhachHang
+@{
+    ViewData["Title"] = "Xóa Khách Hàng";
+}
+
+<h2 class="text-danger">🗑️ Xóa Khách Hàng</h2>
+<hr />
+
+<div class="alert alert-warning">
+    Bạn có chắc muốn xóa khách hàng <strong>@Model.TenKhachHang</strong>?
+</div>
+
+<dl class="row">
+    <dt class="col-sm-3">Họ Tên:</dt>
+    <dd class="col-sm-9">@Model.TenKhachHang</dd>
+    <dt class="col-sm-3">CMND/CCCD:</dt>
+    <dd class="col-sm-9">@Model.Cmnd</dd>
+    <dt class="col-sm-3">Số ĐT:</dt>
+    <dd class="col-sm-9">@Model.Sdt</dd>
+</dl>
+
+<form asp-action="Delete">
+    <input type="hidden" asp-for="MaKhachHang" />
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-danger">🗑️ Xác nhận xóa</button>
+        <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+    </div>
+</form>

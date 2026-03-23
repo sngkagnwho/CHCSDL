@@ -1,0 +1,30 @@
+@model doan.Models.HoaDon
+@{
+    ViewData["Title"] = "Xóa Hóa Đơn";
+}
+
+<h2 class="text-danger">🗑️ Xóa Hóa Đơn</h2>
+<hr />
+
+<div class="alert alert-warning">
+    Bạn có chắc muốn xóa hóa đơn <strong>#@Model.MaHoaDon</strong>?
+</div>
+
+<dl class="row">
+    <dt class="col-sm-3">Mã Đặt Phòng:</dt>
+    <dd class="col-sm-9">@Model.MaDatPhong</dd>
+    <dt class="col-sm-3">Ngày Lập:</dt>
+    <dd class="col-sm-9">@Model.NgayLap.ToString("dd/MM/yyyy")</dd>
+    <dt class="col-sm-3">Tổng Tiền:</dt>
+    <dd class="col-sm-9">@Model.TongTien.ToString("N0") VND</dd>
+    <dt class="col-sm-3">Trạng Thái:</dt>
+    <dd class="col-sm-9">@Model.TrangThai</dd>
+</dl>
+
+<form asp-action="Delete">
+    <input type="hidden" asp-for="MaHoaDon" />
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-danger">🗑️ Xác nhận xóa</button>
+        <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+    </div>
+</form>
